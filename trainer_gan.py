@@ -4,6 +4,8 @@ import torch
 import numpy as np
 from tqdm import tqdm
 
+from torchvision.utils import save_image
+
 class Trainer():
     def __init__(self, train_loader, valid_loader, model, loss_fn, optimizer, device, patience, epochs, result_path, fold_logger, len_train, len_valid):
         self.train_loader = train_loader
@@ -45,7 +47,7 @@ class Trainer():
         self.discriminator.train()
 
         total_G_loss, total_D_loss = 0, 0
-        for batch in tqdm(self.train_loader, file=sys.stdout): #tqdm output will not be written to logger file(will only written to stdout)
+        for i, batch in tqdm(enumerate(self.train_loader), file=sys.stdout): #tqdm output will not be written to logger file(will only written to stdout)
             batch = batch.to(self.device)
             valid = torch.ones((batch.shape[0], 1), requires_grad=False, dtype=torch.float, device=self.device)
             fake = torch.zeros((batch.shape[0], 1), requires_grad=False, dtype=torch.float, device=self.device)
@@ -66,6 +68,9 @@ class Trainer():
 
             total_G_loss += g_loss.item() * batch.shape[0]
             total_D_loss += d_loss.item() * batch.shape[0]
+
+            if i % 100 == 0:
+                save_image(gen_imgs.data[:25], f"images/{i}.png", nrow=5, normalize=True)
         
         return total_G_loss/self.len_train, total_D_loss/self.len_train
     
