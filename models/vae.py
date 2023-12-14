@@ -71,11 +71,11 @@ class Decoder(nn.Module):
         return x
     
 class VAE(nn.Module):
-    def __init__(self):
+    def __init__(self, act):
         super().__init__()
 
-        self.encoder = Encoder('ELU')
-        self.decoder = Decoder('ELU')
+        self.encoder = Encoder(act)
+        self.decoder = Decoder(act)
 
     def encode(self, x):
         encoded = self.encoder(x)

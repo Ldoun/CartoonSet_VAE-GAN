@@ -40,7 +40,7 @@ if __name__ == "__main__":
     train_dataset = Subset(dataset, train_index)
     valid_dataset = Subset(dataset, valid_index)
 
-    model = VAE(args).to(device) #make model based on the model name and args
+    model = VAE(args.act).to(device) #make model based on the model name and args
     loss_fn = vae_loss
     optimizer = optim.Adam(model.parameters(), lr=args.lr)
     scheduler = get_sch(args.scheduler)(optimizer)
