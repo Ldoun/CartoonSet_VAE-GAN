@@ -52,7 +52,7 @@ class Trainer():
             loss.backward()
             self.optimizer.step()
 
-            total_loss += loss.item() * x.shape[0]
+            total_loss += loss.item() * batch.shape[0]
         
         return total_loss/self.len_train
     
