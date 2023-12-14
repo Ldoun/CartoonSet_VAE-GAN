@@ -45,7 +45,7 @@ if __name__ == "__main__":
     loss_fn = torch.nn.BCEWithLogitsLoss()
 
     optimizer_G = torch.optim.Adam(G_model.parameters(), lr=args.lr)
-    optimizer_D = torch.optim.Adam(D_model.parameters(), lr=args.lr)
+    optimizer_D = torch.optim.SGD(D_model.parameters(), lr=args.lr)
 
     train_loader = DataLoader(
         train_dataset, batch_size=args.batch_size, shuffle=True, num_workers=args.num_workers, #pin_memory=True

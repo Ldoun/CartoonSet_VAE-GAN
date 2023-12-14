@@ -15,28 +15,30 @@ class Trainer():
         self.patience = patience
         self.epochs = epochs
         self.logger = fold_logger
-        self.best_model_path = os.path.join(result_path, 'best_model.pt')
+        self.path = result_path
         self.len_train = len_train
         self.len_valid = len_valid
     
     def train(self):
-        best = np.inf
+        #best = np.inf
         for epoch in range(1,self.epochs+1):
             loss_G_train, loss_D_train = self.train_step()
             loss_G_val, loss_D_val = self.valid_step()
 
             self.logger.info(f'Epoch {str(epoch).zfill(5)}: GT_loss:{loss_G_train:.3f} DT_loss:{loss_D_train:.3f} GV_loss:{loss_G_val:.3f} DV_loss:{loss_D_val:.3f}')
+            torch.save(self.generator.state_dict(), os.path.join(self.path, f'{epoch}.pt'))
 
-            if loss_G_val < best:
-                best = loss_G_val
-                torch.save(self.generator.state_dict(), self.best_model_path)
-                bad_counter = 0
+            # Disable Early Stop
+            # if loss_G_val < best:
+            #     best = loss_G_val
+            #     torch.save(self.generator.state_dict(), self.best_model_path)
+            #     bad_counter = 0
 
-            else:
-                bad_counter += 1
+            # else:
+            #     bad_counter += 1
 
-            if bad_counter == self.patience:
-                break
+            # if bad_counter == self.patience:
+            #     break
 
     def train_step(self):
         self.generator.train()
