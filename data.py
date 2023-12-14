@@ -12,7 +12,7 @@ class DataSet(Dataset):
         self.t = transform.Compose([
             transform.ToTensor(),
             transform.CenterCrop([412, 412]),
-            transform.Resize([128, 128])
+            transform.Resize([128, 128], antialias=True)
         ])
 
     def __len__(self):
