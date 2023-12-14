@@ -52,7 +52,7 @@ class Trainer():
             loss.backward()
             self.optimizer.step()
 
-            total_loss += loss.item() * batch.shape[0]
+            total_loss += loss.item()
         
         return total_loss/self.len_train
     
@@ -65,7 +65,7 @@ class Trainer():
                 output, mean, logvar = self.model(batch)            
                 loss = self.loss_fn(output, batch, mean, logvar)
 
-                total_loss += loss.item() * batch.shape[0]
+                total_loss += loss.item()
                 
         return total_loss/self.len_valid
 
