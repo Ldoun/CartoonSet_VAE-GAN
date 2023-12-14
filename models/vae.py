@@ -41,7 +41,7 @@ class Decoder(nn.Module):
         super().__init__()
 
         self.fc = nn.Sequential(
-            nn.Linear(1024, 512),
+            nn.Linear(512, 512),
             getattr(nn, act)(),
         )
 
@@ -96,3 +96,9 @@ class VAE(nn.Module):
     
     def log_normal_pdf(sample, mean, logvar, raxis = 1): # need check
         return torch.sum(-.5 * ((sample - mean) ** 2. * torch.exp(-logvar) + logvar + 1.837877), axis=raxis)
+    
+    def forward(self, x):
+        mean, logvar = self.encode(x)
+        z = self.reparameterize(mean, logvar)
+        logit = self.decode(z)
+        return logit, mean, logvar
