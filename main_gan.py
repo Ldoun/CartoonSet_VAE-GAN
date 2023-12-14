@@ -42,7 +42,7 @@ if __name__ == "__main__":
     G_model = Generator(args.act).to(device)
     D_model = Discriminator(args.act).to(device)
     
-    loss_fn = torch.nn.BCELoss()
+    loss_fn = torch.nn.BCEWithLogitsLoss()
 
     optimizer_G = torch.optim.Adam(G_model.parameters(), lr=args.lr)
     optimizer_D = torch.optim.Adam(D_model.parameters(), lr=args.lr)
