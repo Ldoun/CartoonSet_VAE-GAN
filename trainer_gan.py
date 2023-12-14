@@ -48,7 +48,7 @@ class Trainer():
 
         total_G_loss, total_D_loss = 0, 0
         i = 0
-        for batch in tqdm(enumerate(self.train_loader), file=sys.stdout): #tqdm output will not be written to logger file(will only written to stdout)
+        for batch in tqdm(self.train_loader, file=sys.stdout): #tqdm output will not be written to logger file(will only written to stdout)
             i+=1
             batch = batch.to(self.device)
             valid = torch.ones((batch.shape[0], 1), requires_grad=False, dtype=torch.float, device=self.device)
