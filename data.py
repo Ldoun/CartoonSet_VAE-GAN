@@ -7,13 +7,22 @@ from PIL import Image
 from glob import glob
 
 class DataSet(Dataset):
-    def __init__(self, base_path, label=None):
+    def __init__(self, base_path, is_for_gan=False):
         self.files = glob(os.path.join(base_path, '*', '*.png'))
-        self.t = transform.Compose([
-            transform.ToTensor(),
-            transform.CenterCrop([412, 412]),
-            transform.Resize([128, 128], antialias=True)
-        ])
+        
+        if is_for_gan:
+            self.t = transform.Compose([
+                transform.ToTensor(),
+                transform.CenterCrop([412, 412]),
+                transform.Resize([128, 128], antialias=True),
+                transform.Normalize([0.5], [0.5])
+            ])
+        else:
+            self.t = transform.Compose([
+                transform.ToTensor(),
+                transform.CenterCrop([412, 412]),
+                transform.Resize([128, 128], antialias=True)
+            ])
 
     def __len__(self):
         return len(self.files)

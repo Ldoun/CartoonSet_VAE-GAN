@@ -62,7 +62,7 @@ class Generator(nn.Module):
             nn.ConvTranspose2d(64, 64, (3, 3), stride=1), getattr(nn, act)(),
             nn.Dropout(0.25),
             nn.ConvTranspose2d(64, 32, (3, 3), stride=2, output_padding=1), getattr(nn, act)(),
-            nn.ConvTranspose2d(32, 3, (3, 3), stride=1),
+            nn.ConvTranspose2d(32, 3, (3, 3), stride=1), nn.Tanh(),
         )
         
     def forward(self, x,):

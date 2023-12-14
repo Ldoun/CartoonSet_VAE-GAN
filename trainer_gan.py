@@ -71,7 +71,7 @@ class Trainer():
             total_G_loss += g_loss.item() * batch.shape[0]
             total_D_loss += d_loss.item() * batch.shape[0]
 
-            if i % 100 == 0:
+            if i % 10 == 0:
                 save_image(gen_imgs.data[:25], os.path.join(self.path, f"{i}.png"), nrow=5, normalize=True)
         
         return total_G_loss/self.len_train, total_D_loss/self.len_train

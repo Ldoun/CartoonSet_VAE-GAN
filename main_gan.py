@@ -31,7 +31,7 @@ if __name__ == "__main__":
     sys.excepthook = partial(handle_unhandled_exception,logger=logger)
     
     fold=0
-    dataset = DataSet(base_path=args.path)
+    dataset = DataSet(base_path=args.path, is_for_gan=True)
     train_index, valid_index = train_test_split(range(len(dataset)), test_size=0.2)
 
     logger.info(f'start training of {fold+1}-fold')
