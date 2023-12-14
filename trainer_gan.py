@@ -68,7 +68,8 @@ class Trainer():
         return total_G_loss/self.len_train, total_D_loss/self.len_train
     
     def valid_step(self):
-        self.model.eval()
+        self.generator.eval()
+        self.discriminator.eval()
         with torch.no_grad():
             total_G_loss, total_D_loss = 0, 0
             for batch in self.valid_loader:
