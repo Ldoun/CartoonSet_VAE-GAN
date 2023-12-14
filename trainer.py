@@ -45,6 +45,7 @@ class Trainer():
 
         total_loss = 0
         for batch in tqdm(self.train_loader, file=sys.stdout): #tqdm output will not be written to logger file(will only written to stdout)
+            batch = batch.to(self.device)
             self.optimizer.zero_grad()
             output, mean, logvar = self.model(batch)            
             loss = self.loss_fn(output, batch, mean, logvar)
@@ -60,6 +61,7 @@ class Trainer():
         with torch.no_grad():
             total_loss = 0
             for batch in self.valid_loader:
+                batch = batch.to(self.device)
                 output, mean, logvar = self.model(batch)            
                 loss = self.loss_fn(output, batch, mean, logvar)
 
