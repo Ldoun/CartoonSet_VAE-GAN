@@ -11,7 +11,7 @@ from torch.utils.data import DataLoader, Subset
 from models import VAE
 from loss import vae_loss
 from data import DataSet
-from trainer import Trainer
+from trainer_vae import Trainer
 from config import get_args
 from lr_scheduler import get_sch
 from utils import seed_everything, handle_unhandled_exception, save_to_json
