@@ -1,9 +1,4 @@
-# Pytorch_Simple_Template
-Pytorch_Simple_Template
-
-- K-fold Cross validation
-- Early Stopping
-- WarmUp Scheduler
-- Logging
-- Saving Out of Fold Prediction for Stacking Ensemble
-- Seed Fix
+'''
+python main_vae.py --batch_size 256 --lr 1e-4
+python main_gan.py --batch_size 256 --lr 1e-4
+'''
