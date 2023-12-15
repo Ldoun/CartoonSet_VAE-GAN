@@ -4,6 +4,8 @@ import torch
 import numpy as np
 from tqdm import tqdm
 
+from torchvision.utils import save_image
+
 class Trainer():
     def __init__(self, train_loader, valid_loader, model, loss_fn, optimizer, scheduler, device, patience, epochs, result_path, fold_logger, len_train, len_valid):
         self.train_loader = train_loader
@@ -23,6 +25,7 @@ class Trainer():
     def train(self):
         best = np.inf
         for epoch in range(1,self.epochs+1):
+            self.cur_epoch = epoch
             loss_train = self.train_step()
             loss_val = self.valid_step()
             self.scheduler.step()
@@ -66,6 +69,9 @@ class Trainer():
                 loss = self.loss_fn(output, batch, mean, logvar)
 
                 total_loss += loss.item()
+        with torch.no_grad():
+            gen_imgs = self.model.generate_sample(torch.randn(25, 512, device='cuda'))
+            save_image(gen_imgs.data, os.path.join(self.path, f"{self.cur_epoch}epoch.png"), nrow=5, normalize=True)
                 
         return total_loss/self.len_valid
 

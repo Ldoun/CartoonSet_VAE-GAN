@@ -24,6 +24,7 @@ class Trainer():
     def train(self):
         #best = np.inf
         for epoch in range(1,self.epochs+1):
+            self.cur_epoch = epoch
             loss_G_train, loss_D_train = self.train_step()
             loss_G_val, loss_D_val = self.valid_step()
 
@@ -47,7 +48,6 @@ class Trainer():
         self.discriminator.train()
 
         total_G_loss, total_D_loss = 0, 0
-        i = 0
         for batch in tqdm(self.train_loader, file=sys.stdout): #tqdm output will not be written to logger file(will only written to stdout)
             i+=1
             batch = batch.to(self.device)
@@ -71,8 +71,7 @@ class Trainer():
             total_G_loss += g_loss.item() * batch.shape[0]
             total_D_loss += d_loss.item() * batch.shape[0]
 
-            if i % 10 == 0:
-                save_image(gen_imgs.data[:25], os.path.join(self.path, f"{i}.png"), nrow=5, normalize=True)
+        save_image(gen_imgs.data[:25], os.path.join(self.path, f"{self.cur_epoch}epoch.png"), nrow=5, normalize=True)
         
         return total_G_loss/self.len_train, total_D_loss/self.len_train
     

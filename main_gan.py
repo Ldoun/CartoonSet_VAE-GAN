@@ -39,8 +39,8 @@ if __name__ == "__main__":
     train_dataset = Subset(dataset, train_index)
     valid_dataset = Subset(dataset, valid_index)
 
-    G_model = Generator(args.act).to(device)
-    D_model = Discriminator(args.act).to(device)
+    G_model = Generator().to(device)
+    D_model = Discriminator().to(device)
     
     loss_fn = torch.nn.BCEWithLogitsLoss()
 
