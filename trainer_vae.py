@@ -18,6 +18,7 @@ class Trainer():
         self.patience = patience
         self.epochs = epochs
         self.logger = fold_logger
+        self.path = result_path
         self.best_model_path = os.path.join(result_path, 'best_model.pt')
         self.len_train = len_train
         self.len_valid = len_valid
