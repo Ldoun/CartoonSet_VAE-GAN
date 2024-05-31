@@ -71,6 +71,8 @@ class Trainer():
 
                 total_loss += loss.item()
 
+            save_image(output.data[:25], os.path.join(self.path, f"{self.cur_epoch}epoch.png"), nrow=5, normalize=True)
+
         return total_loss/self.len_valid
 
     # def test(self, test_loader, gen_loader):
