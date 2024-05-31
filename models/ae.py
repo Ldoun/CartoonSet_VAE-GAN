@@ -79,23 +79,13 @@ class AutoEncoder(nn.Module):
 
     def encode(self, x):
         encoded = self.encoder(x)
-        mean, logvar = encoded[:,  :encoded.shape[-1]//2], encoded[:,  encoded.shape[-1]//2:]
-        return mean, logvar
+        return encoded
     
     def decode(self, z, apply_sigmoid=False):
         logits = self.decoder(z)
         if apply_sigmoid:
             return torch.sigmoid(logits)
-        return logits
-    
-    def reparameterize(self, mean, logvar):
-        return torch.randn_like(mean) * torch.exp(logvar * 0.5) + mean
-    
-    def generate_sample(self, eps):
-        return self.decode(eps, apply_sigmoid=True)
-    
-    def log_normal_pdf(sample, mean, logvar, raxis = 1): # need check
-        return torch.sum(-.5 * ((sample - mean) ** 2. * torch.exp(-logvar) + logvar + 1.837877), axis=raxis)
+        return logits    
     
     def forward(self, x):
         z = self.encode(x)
